@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(120)
+  description String   @db.VarChar(5000)
+  imageUrl    String?  @map("image_url") @db.Text
+  techStack   String[] @default([]) @map("tech_stack")
+  liveDemoUrl String?  @map("live_demo_url") @db.Text
+  githubUrl   String?  @map("github_url") @db.Text
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("projects")
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(80)
+  email     String   @db.VarChar(254)
+  subject   String   @db.VarChar(120)
+  message   String   @db.VarChar(5000)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@map("contact_messages")
+}
